@@ -1,1 +1,4 @@
 app = "sr4a-discord-bot"
+[build]
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
