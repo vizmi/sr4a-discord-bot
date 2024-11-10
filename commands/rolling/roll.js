@@ -14,7 +14,6 @@ module.exports = {
 				.setDescriptionLocalization('hu', 'A kockák száma')
 	),
 	async execute(interaction) {
-		const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 		const dice = interaction.options.getInteger('dice');
 		const rolls = [];
 		let ones = 0, hits = 0;
@@ -22,13 +21,13 @@ module.exports = {
 			const roll = Math.floor(Math.random() * 6) + 1;
 			if (roll === 1) ones++;
 			if (roll >= 5) hits++;
-    		rolls.push(diceFaces[roll-1]);
+    		rolls.push(`[${roll}]`);
   		}
 		var resp = rolls.join(' ') + ' = ';
 		const localResponses = { 
 			criticalGlitch: { en: 'critical glitch', hu: 'kritikus hiba' },
 			glitch: { en: `glitch with ${hits} hit(s)`, hu: `hiba ${hits} találattal` },
-			hits: { en: `${hits} hit(s)`, hu: `${hits} találat(ok)` }
+			hits: { en: `${hits} hit(s)`, hu: `${hits} találat` }
 		}
 		locale = interaction.locale.substring(0,2);
 		if ((dice - ones) <= (dice / 2)) {
