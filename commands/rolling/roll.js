@@ -95,9 +95,7 @@ module.exports = {
 				if (confirmation.customId === 'reroll') {
 					// rerolls start with the successes from the OG roll
 					rerolls = rolls.filter(r => r >= 5);
-					console.log('rolls kept: ' + rerolls);
 					rerolls.push(...roll(rolls.length - rerolls.length, false));
-					console.log('failures rerolled: ' + rerolls);
 					resp = respond(dice, rerolls, locale);
 					await interaction.editReply({ content: resp, components: [] });
 				} else if (confirmation.customId === 'keep') {
