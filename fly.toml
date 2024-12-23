@@ -1,4 +1,14 @@
-app = "sr4a-discord-bot"
+# fly.toml app configuration file generated for sr4a-discord-bot on 2024-12-22T17:48:17-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'sr4a-discord-bot'
+primary_region = 'ewr'
+
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
