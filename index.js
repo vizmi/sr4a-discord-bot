@@ -1,6 +1,11 @@
 require('dotenv').config(); // Load environment variables from .env file
 const token = process.env.DISCORD_TOKEN;
 
+if (!token) {
+	console.error('Missing required environment variable: DISCORD_TOKEN');
+	process.exit(1);
+}
+
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
