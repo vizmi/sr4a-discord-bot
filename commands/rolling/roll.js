@@ -1,12 +1,5 @@
 const { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
-
-const localResponses = { 
-	criticalGlitch: { en: 'critical glitch', hu: 'kritikus hiba' },
-	glitch: { en: 'hit(s) with glitch', hu: 'találat hibával' },
-	hits: { en: 'hit(s)', hu: 'találat' },
-	reroll: { en: 'Reroll with Edge', hu: 'Újradobom Mázlival' },
-	keep: { en: 'Keep', hu: 'Megtartom' }
-}
+const { t } = require('../../locales');
 
 const roll_die = (sixes) => {
 	if (!sixes) return [ Math.floor(Math.random() * 6) + 1 ];
@@ -36,10 +29,10 @@ const respond = (dice, rolls, locale) => {
 
 	// main SR4 logic
 	if ((dice - ones) <= (dice / 2)) {
-		if (hits == 0) resp += localResponses.criticalGlitch[locale];
-		else resp += hits + ' ' + localResponses.glitch[locale];
+		if (hits == 0) resp += t('criticalGlitch', locale);
+		else resp += hits + ' ' + t('glitch', locale);
 	} else {
-		resp += hits + ' ' + localResponses.hits[locale];
+		resp += hits + ' ' + t('hits', locale);
 	}
 	return resp;
 }
@@ -79,11 +72,11 @@ module.exports = {
 		} else {
 			const reroll = new ButtonBuilder()
 				.setCustomId('reroll')
-				.setLabel(localResponses.reroll[locale])
+				.setLabel(t('reroll', locale))
 				.setStyle(ButtonStyle.Primary);
 			const keep = new ButtonBuilder()
 				.setCustomId('keep')
-				.setLabel(localResponses.keep[locale])
+				.setLabel(t('keep', locale))
 				.setStyle(ButtonStyle.Secondary);
 			const row = new ActionRowBuilder().addComponents(reroll, keep);
 			const response = await interaction.reply({ content: resp, components: [row] });
@@ -94,7 +87,7 @@ module.exports = {
 				const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 30_000 });
 				if (confirmation.customId === 'reroll') {
 					// rerolls start with the successes from the OG roll
-					rerolls = rolls.filter(r => r >= 5);
+					const rerolls = rolls.filter(r => r >= 5);
 					rerolls.push(...roll(rolls.length - rerolls.length, false));
 					resp = respond(dice, rerolls, locale);
 					await interaction.editReply({ content: resp, components: [] });
