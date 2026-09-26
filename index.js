@@ -55,4 +55,16 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 
-client.login(token);
+client.login(token).catch(error => {
+	console.error('Failed to log in to Discord:', error);
+	process.exit(1);
+});
+
+const shutdown = async signal => {
+	console.log(`Received ${signal}, shutting down...`);
+	await client.destroy();
+	process.exit(0);
+};
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
