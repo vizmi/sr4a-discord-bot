@@ -49,6 +49,8 @@ module.exports = {
 				.setRequired(true)
 				.setDescription('The number of dice')
 				.setDescriptionLocalization('hu', 'A kockák száma')
+				.setMinValue(1)
+				.setMaxValue(100)
 		)
 		.addBooleanOption(option =>
 			option.setName('edge')
