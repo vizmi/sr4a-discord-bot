@@ -38,6 +38,11 @@ const respond = (dice, rolls, locale) => {
 }
 
 module.exports = {
+	// exposed for unit testing; not part of the command's public interface
+	roll_die,
+	roll,
+	respond,
+	// real public interface
 	data: new SlashCommandBuilder()
 		.setName('roll')
 		.setNameLocalization('hu', 'dobj')
@@ -96,7 +101,7 @@ module.exports = {
 				} else if (confirmation.customId === 'keep') {
 					await interaction.editReply({ content: resp, components: [] });
 				}
-			} catch (e) {
+			} catch {
 				await interaction.editReply({ content: resp, components: [] });
 			}
 		}
